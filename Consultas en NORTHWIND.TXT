@@ -1,18 +1,24 @@
- select CategoryName, count(ProductName) as "Numero de productos" from Categories inner join Products
+--primer consulta
+
+select CategoryName, count(ProductName) as "Numero de productos" from Categories inner join Products
   on Categories.CategoryID=Products.CategoryID group by CategoryName
 
 
 
-  select CONCAT(FirstName,' ',LastName) as "Nombre completo" , OrderDate  from Employees,Orders
-  order by [Nombre completo]
 
+--segunda consulta
+select CONCAT(FirstName,' ',LastName) as "Nombre completo" , OrderDate,ProductName,Quantity  from Employees inner join Orders on  Employees.EmployeeID=Orders.EmployeeID
+                              inner join [Order Details] on [Order Details].OrderID=Orders.OrderID
+							  inner join Products on Products.ProductID=[Order Details].ProductID
+  order by [Nombre completo]
 
 	
 
 
-
- select CONCAT(FirstName,' ',left(Lastname,1)) as "Nombre", Sum([Order Details].Quantity) as "venta totales" 
- from [Order Details] inner join Orders on [Order Details].OrderID=Orders.OrderID
-             inner join Employees on Orders.EmployeeID=Orders.EmployeeID
+--tercer consulta
+ select CONCAT(FirstName,' ',left(Lastname,1)) as "Nombre", sum(Quantity*UnitPrice) as "venta totales"
+ from Employees inner join Orders on Employees.EmployeeID=Orders.EmployeeID
+           inner join [Order Details] on [Order Details].OrderID=Orders.OrderID
+             
  group by FirstName,LastName
- having sum(Quantity)>100000
+ having sum(Quantity*UnitPrice)>100000
