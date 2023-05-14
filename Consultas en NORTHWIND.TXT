@@ -1,0 +1,18 @@
+ select CategoryName, count(ProductName) as "Numero de productos" from Categories inner join Products
+  on Categories.CategoryID=Products.CategoryID group by CategoryName
+
+
+
+  select CONCAT(FirstName,' ',LastName) as "Nombre completo" , OrderDate  from Employees,Orders
+  order by [Nombre completo]
+
+
+	
+
+
+
+ select CONCAT(FirstName,' ',left(Lastname,1)) as "Nombre", Sum([Order Details].Quantity) as "venta totales" 
+ from [Order Details] inner join Orders on [Order Details].OrderID=Orders.OrderID
+             inner join Employees on Orders.EmployeeID=Orders.EmployeeID
+ group by FirstName,LastName
+ having sum(Quantity)>100000
